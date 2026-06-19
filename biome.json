@@ -1,5 +1,5 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.2.4/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.4.5/schema.json",
 	"vcs": {
 		"enabled": false,
 		"clientKind": "git",
@@ -24,8 +24,8 @@
     "lineEnding": "lf",
     "attributePosition": "auto"
   },
-  "organizeImports": {
-    "enabled": true
+  "assist": {
+    "actions": { "source": { "organizeImports": "on" } }
   },
   "linter": {
     "enabled": true,
@@ -42,14 +42,13 @@
         "noInvalidUseBeforeDeclaration": "error",
         "noSwitchDeclarations": "error",
         "noVoidTypeReturn": "error",
-        "noConstantCondition": "error",
-        "noUnnecessaryContinue": "warn"
+        "noConstantCondition": "error"
       },
       "suspicious": {
         "recommended": true,
         "noExplicitAny": "error",
         "noDoubleEquals": "error",
-        "noConsoleLog": "warn",
+        "noConsole": "warn",
         "noDebugger": "error",
         "noEmptyBlockStatements": "warn",
         "noImplicitAnyLet": "error",
@@ -70,7 +69,6 @@
         "useEnumInitializers": "error",
         "noParameterAssign": "error",
         "useNodejsImportProtocol": "error",
-        "noCommaOperator": "error",
         "useBlockStatements": "off",
         "noInferrableTypes": "warn",
         "useConsistentArrayType": {
@@ -170,8 +168,6 @@
         "noMisusedPromises": "error",
         "useAwaitThenable": "error",
         "noUnnecessaryConditions": "warn",
-        "noDeprecatedImports": "warn",
-        "noPrivateImports": "error",
         "useDestructuring": "off"
       }
     }
@@ -193,7 +189,7 @@
   },
   "overrides": [
     {
-      "include": [
+      "includes": [
         "**/*.test.ts",
         "**/*.test.tsx",
         "**/*.spec.ts",
@@ -206,7 +202,7 @@
         "rules": {
           "suspicious": {
             "noExplicitAny": "warn",
-            "noConsoleLog": "off"
+            "noConsole": "off"
           },
           "style": {
             "noNonNullAssertion": "warn"
@@ -218,7 +214,7 @@
       }
     },
     {
-      "include": [
+      "includes": [
         "**/adapters/**",
         "**/infrastructure/**",
         "**/composition/**"
@@ -226,13 +222,13 @@
       "linter": {
         "rules": {
           "suspicious": {
-            "noConsoleLog": "off"
+            "noConsole": "off"
           }
         }
       }
     },
     {
-      "include": [
+      "includes": [
         "**/scripts/**",
         "**/seed/**",
         "**/*.config.ts",
@@ -241,7 +237,7 @@
       "linter": {
         "rules": {
           "suspicious": {
-            "noConsoleLog": "off",
+            "noConsole": "off",
             "noExplicitAny": "warn"
           },
           "nursery": {
