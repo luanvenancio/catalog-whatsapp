@@ -1,6 +1,6 @@
+import type { Table } from "@tanstack/react-table"
 import type { ReactElement } from "react"
 import { getColumnHeaderLabel } from "@/components/reui/data-grid/data-grid"
-import type { Table } from "@tanstack/react-table"
 
 import {
   DropdownMenu,
@@ -23,9 +23,7 @@ function DataGridColumnVisibility<TData>({
       <DropdownMenuTrigger render={trigger} />
       <DropdownMenuContent align="end" className="min-w-[150px]">
         <DropdownMenuGroup>
-          <DropdownMenuLabel className="font-medium">
-            Toggle Columns
-          </DropdownMenuLabel>
+          <DropdownMenuLabel className="font-medium">Toggle Columns</DropdownMenuLabel>
           {table
             .getAllColumns()
             .filter((column) => column.getCanHide())

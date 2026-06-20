@@ -1,8 +1,7 @@
-
-import React,{ type ReactNode } from "react"
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
+import type React from "react"
+import type { ReactNode } from "react"
 import { useDataGrid } from "@/components/reui/data-grid/data-grid"
-
-import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   Select,
@@ -12,7 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Skeleton } from "@/components/ui/skeleton"
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
+import { cn } from "@/lib/utils"
 
 interface DataGridPaginationProps {
   sizes?: number[]
@@ -73,12 +72,8 @@ function DataGridPagination(props: DataGridPaginationProps): React.JSX.Element {
   const paginationMoreLimit = mergedProps?.moreLimit || 5
 
   // Determine the start and end of the pagination group
-  const currentGroupStart =
-    Math.floor(pageIndex / paginationMoreLimit) * paginationMoreLimit
-  const currentGroupEnd = Math.min(
-    currentGroupStart + paginationMoreLimit,
-    pageCount
-  )
+  const currentGroupStart = Math.floor(pageIndex / paginationMoreLimit) * paginationMoreLimit
+  const currentGroupEnd = Math.min(currentGroupStart + paginationMoreLimit, pageCount)
 
   // Render page buttons based on the current group
   const renderPageButtons = () => {
@@ -99,7 +94,7 @@ function DataGridPagination(props: DataGridPaginationProps): React.JSX.Element {
           }}
         >
           {i + 1}
-        </Button>
+        </Button>,
       )
     }
     return buttons
@@ -144,7 +139,7 @@ function DataGridPagination(props: DataGridPaginationProps): React.JSX.Element {
       data-slot="data-grid-pagination"
       className={cn(
         "flex grow flex-col flex-wrap items-center justify-between gap-2.5 py-2.5 sm:flex-row sm:py-0",
-        mergedProps?.className
+        mergedProps?.className,
       )}
     >
       <div className="order-2 flex flex-wrap items-center space-x-2.5 pb-2.5 sm:order-1 sm:pb-0">
@@ -152,9 +147,7 @@ function DataGridPagination(props: DataGridPaginationProps): React.JSX.Element {
           mergedProps?.sizesSkeleton
         ) : (
           <>
-            <div className="text-muted-foreground text-sm">
-              {mergedProps.rowsPerPageLabel}
-            </div>
+            <div className="text-muted-foreground text-sm">{mergedProps.rowsPerPageLabel}</div>
             <Select
               value={`${pageSize}`}
               onValueChange={(value) => {
@@ -193,9 +186,7 @@ function DataGridPagination(props: DataGridPaginationProps): React.JSX.Element {
                   onClick={() => table.previousPage()}
                   disabled={!table.getCanPreviousPage()}
                 >
-                  <span className="sr-only">
-                    {mergedProps.previousPageLabel}
-                  </span>
+                  <span className="sr-only">{mergedProps.previousPageLabel}</span>
                   <ChevronLeftIcon className="size-4" />
                 </Button>
 

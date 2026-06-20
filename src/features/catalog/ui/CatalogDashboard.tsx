@@ -1,34 +1,26 @@
-import { Link } from "@tanstack/react-router";
-import { ExternalLink } from "lucide-react";
-import { Badge } from "#/components/ui/badge";
-import { ButtonLink } from "#/components/ui/button-link";
-import { Card, CardContent } from "#/components/ui/card";
-import type { AdminProductSummary } from "#/features/catalog/queries/catalogServerQueries";
-import type { Catalog } from "#/features/catalog/schemas/catalogSchemas";
-import { ProductStatusBadge } from "#/features/product/ui/ProductStatusBadge";
-import { ProductUpdatedAt } from "#/features/product/ui/ProductUpdatedAt";
+import { Link } from "@tanstack/react-router"
+import { ExternalLink } from "lucide-react"
+import { Badge } from "#/components/ui/badge"
+import { ButtonLink } from "#/components/ui/button-link"
+import { Card, CardContent } from "#/components/ui/card"
+import type { AdminProductSummary } from "#/features/catalog/queries/catalogServerQueries"
+import type { Catalog } from "#/features/catalog/schemas/catalogSchemas"
+import { ProductStatusBadge } from "#/features/product/ui/ProductStatusBadge"
+import { ProductUpdatedAt } from "#/features/product/ui/ProductUpdatedAt"
 
 export function CatalogDashboard({
   catalog,
   products,
 }: {
-  catalog: Catalog;
-  products: AdminProductSummary[];
+  catalog: Catalog
+  products: AdminProductSummary[]
 }) {
-  const publishedCount = products.filter(
-    (product) => product.status === "published",
-  ).length;
-  const draftCount = products.filter(
-    (product) => product.status === "draft",
-  ).length;
+  const publishedCount = products.filter((product) => product.status === "published").length
+  const draftCount = products.filter((product) => product.status === "draft").length
   const recentProducts = [...products]
-    .sort(
-      (left, right) =>
-        new Date(right.updatedAt).getTime() -
-        new Date(left.updatedAt).getTime(),
-    )
-    .slice(0, 5);
-  const publicPath = `/catalogs/${catalog.slug}`;
+    .sort((left, right) => new Date(right.updatedAt).getTime() - new Date(left.updatedAt).getTime())
+    .slice(0, 5)
+  const publicPath = `/catalogs/${catalog.slug}`
 
   return (
     <main className="mx-auto grid w-full max-w-6xl gap-8 px-4 py-6 sm:py-8">
@@ -36,9 +28,7 @@ export function CatalogDashboard({
         <div className="grid gap-2">
           <div className="flex flex-wrap items-center gap-2">
             <h1 className="text-2xl font-semibold sm:text-3xl">Visão geral</h1>
-            <Badge
-              variant={catalog.status === "published" ? "default" : "secondary"}
-            >
+            <Badge variant={catalog.status === "published" ? "default" : "secondary"}>
               {catalog.status === "published" ? "Publicado" : "Rascunho"}
             </Badge>
           </div>
@@ -48,10 +38,7 @@ export function CatalogDashboard({
         </div>
       </header>
 
-      <section
-        aria-label="Resumo dos produtos"
-        className="grid gap-3 sm:grid-cols-3"
-      >
+      <section aria-label="Resumo dos produtos" className="grid gap-3 sm:grid-cols-3">
         <SummaryItem label="Produtos" value={products.length} />
         <SummaryItem label="Publicados" value={publishedCount} />
         <SummaryItem label="Rascunhos" value={draftCount} />
@@ -82,9 +69,7 @@ export function CatalogDashboard({
             <h2 className="text-base font-semibold" id="recent-products-title">
               Produtos recentes
             </h2>
-            <p className="text-sm text-muted-foreground">
-              Últimos itens alterados na vitrine.
-            </p>
+            <p className="text-sm text-muted-foreground">Últimos itens alterados na vitrine.</p>
           </div>
           <ButtonLink to="/admin/products" variant="link">
             Ver todos
@@ -93,17 +78,12 @@ export function CatalogDashboard({
         <RecentProductsList products={recentProducts} />
       </section>
 
-      <section
-        className="grid gap-2 border-t pt-6"
-        aria-labelledby="public-link-title"
-      >
+      <section className="grid gap-2 border-t pt-6" aria-labelledby="public-link-title">
         <h2 className="text-base font-semibold" id="public-link-title">
           Link público
         </h2>
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <code className="min-w-0 truncate text-sm text-muted-foreground">
-            {publicPath}
-          </code>
+          <code className="min-w-0 truncate text-sm text-muted-foreground">{publicPath}</code>
 
           <ButtonLink
             params={{ catalogSlug: catalog.slug }}
@@ -117,7 +97,7 @@ export function CatalogDashboard({
         </div>
       </section>
     </main>
-  );
+  )
 }
 
 function SummaryItem({ label, value }: { label: string; value: number }) {
@@ -128,14 +108,10 @@ function SummaryItem({ label, value }: { label: string; value: number }) {
         <p className="mt-1 text-2xl font-semibold tabular-nums">{value}</p>
       </CardContent>
     </Card>
-  );
+  )
 }
 
-function RecentProductsList({
-  products,
-}: {
-  products: AdminProductSummary[];
-}) {
+function RecentProductsList({ products }: { products: AdminProductSummary[] }) {
   if (products.length === 0) {
     return (
       <Card className="border-dashed shadow-none">
@@ -143,7 +119,7 @@ function RecentProductsList({
           Nenhum produto adicionado ainda.
         </CardContent>
       </Card>
-    );
+    )
   }
 
   return (
@@ -151,11 +127,21 @@ function RecentProductsList({
       <ul className="divide-y">
         {products.map((product) => (
           <li key={product.id}>
-            <Link className="flex items-center gap-3 p-3 transition-colors hover:bg-muted/50 sm:p-4" to="/admin/products">
-              <img alt={`Imagem de ${product.name}`} className="size-11 shrink-0 rounded-md border bg-muted object-cover" loading="lazy" src={product.imageUrl} />
+            <Link
+              className="flex items-center gap-3 p-3 transition-colors hover:bg-muted/50 sm:p-4"
+              to="/admin/products"
+            >
+              <img
+                alt={`Imagem de ${product.name}`}
+                className="size-11 shrink-0 rounded-md border bg-muted object-cover"
+                loading="lazy"
+                src={product.imageUrl}
+              />
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm font-medium">{product.name}</p>
-                <p className="mt-0.5 text-xs text-muted-foreground">Atualizado <ProductUpdatedAt value={product.updatedAt} /></p>
+                <p className="mt-0.5 text-xs text-muted-foreground">
+                  Atualizado <ProductUpdatedAt value={product.updatedAt} />
+                </p>
               </div>
               <ProductStatusBadge status={product.status} />
             </Link>
@@ -163,13 +149,12 @@ function RecentProductsList({
         ))}
       </ul>
     </Card>
-  );
+  )
 }
 
 function getCurrentSituation(total: number, drafts: number) {
-  if (total === 0)
-    return "Adicione o primeiro produto para começar sua vitrine.";
-  if (drafts === 1) return "Existe 1 produto em rascunho para revisar.";
-  if (drafts > 1) return `Existem ${drafts} produtos em rascunho para revisar.`;
-  return "Todos os produtos estão publicados.";
+  if (total === 0) return "Adicione o primeiro produto para começar sua vitrine."
+  if (drafts === 1) return "Existe 1 produto em rascunho para revisar."
+  if (drafts > 1) return `Existem ${drafts} produtos em rascunho para revisar.`
+  return "Todos os produtos estão publicados."
 }

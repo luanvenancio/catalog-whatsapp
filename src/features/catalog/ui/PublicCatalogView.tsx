@@ -1,39 +1,29 @@
-import { SearchIcon, X } from "lucide-react";
-import { useMemo, useState } from "react";
-import { Button } from "#/components/ui/button";
-import type { Catalog } from "#/features/catalog/schemas/catalogSchemas";
-import { BusinessAvatar } from "#/features/catalog/ui/BusinessAvatar";
-import { CatalogImage } from "#/features/catalog/ui/CatalogImage";
-import {
-  getCatalogWhatsappHref,
-  getProductWhatsappHref,
-} from "#/features/catalog/ui/whatsapp";
-import type { Category } from "#/features/category/schemas/categorySchemas";
-import type { Product } from "#/features/product/schemas/productSchemas";
-import { cn } from "#/lib/utils";
-import { Field } from "#/components/ui/field";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "#/components/ui/input-group";
+import { SearchIcon, X } from "lucide-react"
+import { useMemo, useState } from "react"
+import { Button } from "#/components/ui/button"
+import { Field } from "#/components/ui/field"
+import { InputGroup, InputGroupAddon, InputGroupInput } from "#/components/ui/input-group"
+import type { Catalog } from "#/features/catalog/schemas/catalogSchemas"
+import { BusinessAvatar } from "#/features/catalog/ui/BusinessAvatar"
+import { CatalogImage } from "#/features/catalog/ui/CatalogImage"
+import { getCatalogWhatsappHref, getProductWhatsappHref } from "#/features/catalog/ui/whatsapp"
+import type { Category } from "#/features/category/schemas/categorySchemas"
+import type { Product } from "#/features/product/schemas/productSchemas"
+import { cn } from "#/lib/utils"
 
 export function PublicCatalogView({
   catalog,
   categories,
   products,
 }: {
-  catalog: Catalog;
-  categories: Category[];
-  products: Product[];
+  catalog: Catalog
+  categories: Category[]
+  products: Product[]
 }) {
-  const [search, setSearch] = useState("");
-  const [selectedCategoryIds, setSelectedCategoryIds] = useState<Set<string>>(
-    () => new Set(),
-  );
-  const normalizedSearch = normalizeSearch(search);
-  const hasFilters =
-    normalizedSearch.length > 0 || selectedCategoryIds.size > 0;
+  const [search, setSearch] = useState("")
+  const [selectedCategoryIds, setSelectedCategoryIds] = useState<Set<string>>(() => new Set())
+  const normalizedSearch = normalizeSearch(search)
+  const hasFilters = normalizedSearch.length > 0 || selectedCategoryIds.size > 0
   const filteredProducts = useMemo(
     () =>
       products.filter((product) => {
@@ -41,27 +31,25 @@ export function PublicCatalogView({
           selectedCategoryIds.size === 0 ||
           (product.categoryId !== undefined &&
             product.categoryId !== null &&
-            selectedCategoryIds.has(product.categoryId));
-        const searchableText = normalizeSearch(
-          `${product.name} ${product.description}`,
-        );
+            selectedCategoryIds.has(product.categoryId))
+        const searchableText = normalizeSearch(`${product.name} ${product.description}`)
 
-        return matchesCategory && searchableText.includes(normalizedSearch);
+        return matchesCategory && searchableText.includes(normalizedSearch)
       }),
     [normalizedSearch, products, selectedCategoryIds],
-  );
+  )
 
   function toggleCategory(categoryId: string) {
     setSelectedCategoryIds((current) => {
-      const next = new Set(current);
-      next.has(categoryId) ? next.delete(categoryId) : next.add(categoryId);
-      return next;
-    });
+      const next = new Set(current)
+      next.has(categoryId) ? next.delete(categoryId) : next.add(categoryId)
+      return next
+    })
   }
 
   function clearFilters() {
-    setSearch("");
-    setSelectedCategoryIds(new Set());
+    setSearch("")
+    setSelectedCategoryIds(new Set())
   }
 
   return (
@@ -86,9 +74,7 @@ export function PublicCatalogView({
               <BusinessAvatar name={catalog.name} />
             </div>
             <div className="min-w-0 flex-1 sm:py-4">
-              <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
-                {catalog.name}
-              </h1>
+              <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">{catalog.name}</h1>
               <p className="mt-2 max-w-2xl text-base text-zinc-600 sm:text-lg">
                 {catalog.description ||
                   "Escolha o que chamou sua atenção e inicie uma conversa com contexto."}
@@ -110,10 +96,7 @@ export function PublicCatalogView({
             </div>
           ) : (
             <>
-              <section
-                aria-label="Filtros de produtos"
-                className="grid gap-3"
-              >
+              <section aria-label="Filtros de produtos" className="grid gap-3">
                 <Field>
                   <InputGroup className="bg-background">
                     <InputGroupAddon>
@@ -125,7 +108,6 @@ export function PublicCatalogView({
                       placeholder="Buscar produtos..."
                       value={search}
                       onChange={(event) => setSearch(event.target.value)}
-                      
                     />
                   </InputGroup>
                 </Field>
@@ -137,7 +119,7 @@ export function PublicCatalogView({
                       role="group"
                     >
                       {categories.map((category) => {
-                        const isSelected = selectedCategoryIds.has(category.id);
+                        const isSelected = selectedCategoryIds.has(category.id)
                         return (
                           <button
                             aria-pressed={isSelected}
@@ -153,25 +135,16 @@ export function PublicCatalogView({
                           >
                             {category.name}
                           </button>
-                        );
+                        )
                       })}
                     </div>
                   ) : null}
                   <div className="flex min-h-8 items-center justify-between gap-3">
                     <p aria-live="polite" className="text-sm text-zinc-600">
-                      {resultCountLabel(
-                        filteredProducts.length,
-                        products.length,
-                        hasFilters,
-                      )}
+                      {resultCountLabel(filteredProducts.length, products.length, hasFilters)}
                     </p>
                     {hasFilters ? (
-                      <Button
-                        className="shrink-0"
-                        onClick={clearFilters}
-                        size="sm"
-                        variant="ghost"
-                      >
+                      <Button className="shrink-0" onClick={clearFilters} size="sm" variant="ghost">
                         <X aria-hidden="true" /> Limpar filtros
                       </Button>
                     ) : null}
@@ -181,9 +154,7 @@ export function PublicCatalogView({
 
               {filteredProducts.length === 0 ? (
                 <section className="grid justify-items-center gap-3 rounded-xl border border-dashed border-zinc-300 bg-white p-8 text-center">
-                  <h2 className="text-lg font-semibold">
-                    Nenhum produto encontrado.
-                  </h2>
+                  <h2 className="text-lg font-semibold">Nenhum produto encontrado.</h2>
                   <p className="text-sm text-zinc-600">
                     Tente buscar outro termo ou remover os filtros.
                   </p>
@@ -192,16 +163,9 @@ export function PublicCatalogView({
                   </Button>
                 </section>
               ) : (
-                <section
-                  aria-label="Produtos"
-                  className="grid gap-4 sm:grid-cols-2"
-                >
+                <section aria-label="Produtos" className="grid gap-4 sm:grid-cols-2">
                   {filteredProducts.map((product) => (
-                    <ProductCard
-                      catalog={catalog}
-                      key={product.id}
-                      product={product}
-                    />
+                    <ProductCard catalog={catalog} key={product.id} product={product} />
                   ))}
                 </section>
               )}
@@ -210,16 +174,10 @@ export function PublicCatalogView({
         </div>
       </section>
     </main>
-  );
+  )
 }
 
-function ProductCard({
-  catalog,
-  product,
-}: {
-  catalog: Catalog;
-  product: Product;
-}) {
+function ProductCard({ catalog, product }: { catalog: Catalog; product: Product }) {
   return (
     <article className="overflow-hidden rounded-lg border border-zinc-200 bg-white shadow-sm">
       <CatalogImage
@@ -243,7 +201,7 @@ function ProductCard({
         </a>
       </div>
     </article>
-  );
+  )
 }
 
 function normalizeSearch(value: string) {
@@ -251,16 +209,10 @@ function normalizeSearch(value: string) {
     .trim()
     .toLocaleLowerCase("pt-BR")
     .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "");
+    .replace(/[\u0300-\u036f]/g, "")
 }
 
-function resultCountLabel(
-  filtered: number,
-  total: number,
-  hasFilters: boolean,
-) {
-  const productLabel = total === 1 ? "produto" : "produtos";
-  return hasFilters
-    ? `${filtered} de ${total} ${productLabel}`
-    : `${total} ${productLabel}`;
+function resultCountLabel(filtered: number, total: number, hasFilters: boolean) {
+  const productLabel = total === 1 ? "produto" : "produtos"
+  return hasFilters ? `${filtered} de ${total} ${productLabel}` : `${total} ${productLabel}`
 }

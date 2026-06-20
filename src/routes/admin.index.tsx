@@ -1,14 +1,14 @@
-import { createFileRoute, getRouteApi } from "@tanstack/react-router";
-import { CatalogSetupWorkspace } from "#/features/catalog/ui/CatalogSetupWorkspace";
+import { createFileRoute, getRouteApi } from "@tanstack/react-router"
+import { CatalogSetupWorkspace } from "#/features/catalog/ui/CatalogSetupWorkspace"
 
-const adminRoute = getRouteApi("/admin");
+const adminRoute = getRouteApi("/admin")
 
 export const Route = createFileRoute("/admin/")({
-	component: AdminDashboardRoute,
-});
+  component: AdminDashboardRoute,
+})
 
 function AdminDashboardRoute() {
-	const workspace = adminRoute.useLoaderData();
+  const workspace = adminRoute.useLoaderData()
 
-	return <CatalogSetupWorkspace workspace={workspace} />;
+  return <CatalogSetupWorkspace workspace={workspace} />
 }

@@ -1,21 +1,21 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.4.5/schema.json",
-	"vcs": {
-		"enabled": false,
-		"clientKind": "git",
-		"useIgnoreFile": false
-	},
-	"files": {
-		"ignoreUnknown": false,
-		"includes": [
-			"**/src/**/*",
-			"**/.vscode/**/*",
-			"**/index.html",
-			"**/vite.config.ts",
-			"!**/src/routeTree.gen.ts",
-			"!**/src/styles.css"
-		]
-	 },
+  "$schema": "https://biomejs.dev/schemas/2.4.5/schema.json",
+  "vcs": {
+    "enabled": false,
+    "clientKind": "git",
+    "useIgnoreFile": false
+  },
+  "files": {
+    "ignoreUnknown": false,
+    "includes": [
+      "**/src/**/*",
+      "**/.vscode/**/*",
+      "**/index.html",
+      "**/vite.config.ts",
+      "!**/src/routeTree.gen.ts",
+      "!**/src/styles.css"
+    ]
+  },
   "formatter": {
     "enabled": true,
     "indentStyle": "space",
@@ -86,53 +86,37 @@
                 "selector": {
                   "kind": "interface"
                 },
-                "formats": [
-                  "PascalCase"
-                ]
+                "formats": ["PascalCase"]
               },
               {
                 "selector": {
                   "kind": "typeAlias"
                 },
-                "formats": [
-                  "PascalCase"
-                ]
+                "formats": ["PascalCase"]
               },
               {
                 "selector": {
                   "kind": "enum"
                 },
-                "formats": [
-                  "PascalCase"
-                ]
+                "formats": ["PascalCase"]
               },
               {
                 "selector": {
                   "kind": "enumMember"
                 },
-                "formats": [
-                  "CONSTANT_CASE",
-                  "PascalCase"
-                ]
+                "formats": ["CONSTANT_CASE", "PascalCase"]
               },
               {
                 "selector": {
                   "kind": "const"
                 },
-                "formats": [
-                  "camelCase",
-                  "PascalCase",
-                  "CONSTANT_CASE"
-                ]
+                "formats": ["camelCase", "PascalCase", "CONSTANT_CASE"]
               },
               {
                 "selector": {
                   "kind": "function"
                 },
-                "formats": [
-                  "camelCase",
-                  "PascalCase"
-                ]
+                "formats": ["camelCase", "PascalCase"]
               }
             ]
           }
@@ -214,11 +198,7 @@
       }
     },
     {
-      "includes": [
-        "**/adapters/**",
-        "**/infrastructure/**",
-        "**/composition/**"
-      ],
+      "includes": ["**/adapters/**", "**/infrastructure/**", "**/composition/**"],
       "linter": {
         "rules": {
           "suspicious": {
@@ -228,12 +208,7 @@
       }
     },
     {
-      "includes": [
-        "**/scripts/**",
-        "**/seed/**",
-        "**/*.config.ts",
-        "**/*.config.js"
-      ],
+      "includes": ["**/scripts/**", "**/seed/**", "**/*.config.ts", "**/*.config.js"],
       "linter": {
         "rules": {
           "suspicious": {
